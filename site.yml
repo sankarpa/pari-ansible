@@ -1,0 +1,12 @@
+---
+- name: Install and deploy PARI
+  hosts:
+    - production
+    - local
+  roles:
+    - common
+    - nginx
+    - postgres
+    #- elasticsearch
+    - memcached
+    - django

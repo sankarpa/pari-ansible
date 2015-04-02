@@ -1,0 +1,5 @@
+---
+- name: Install elasticsearch
+  apt: name=elasticsearch
+  sudo: true
+  tags: install

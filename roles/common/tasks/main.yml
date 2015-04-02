@@ -1,0 +1,27 @@
+---
+- name: Ensure apt is up to date
+  apt: update_cache=yes
+  sudo: true
+  tags: install
+
+- name: Ensure packages are upgraded
+  apt: upgrade=full
+  sudo: true
+  tags: install
+
+- name: Ensure the following packages are installed
+  apt: name={{ item }}
+  with_items:
+    - python-dev
+    - python-pip
+    - python-virtualenv
+    - npm
+    - libjpeg-dev
+    - libfreetype6-dev
+    - zlib1g-dev
+    - git
+    - libxml2-dev
+    - libxslt-dev
+    - libyaml-dev
+  sudo: true
+  tags: install

@@ -1,0 +1,9 @@
+---
+db_user: pari
+db_password: pari
+db_name: pari
+base_path: /home/{{ ansible_user_id }}
+domain: localhost
+git_repo: https://github.com/RuralIndia/pari.git
+requirements_file: "{{ base_path }}/pari/requirements/dev.txt"
+settings_path: "pari.settings.dev"

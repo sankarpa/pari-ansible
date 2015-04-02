@@ -1,0 +1,47 @@
+---
+- name: Install lessc (LESS Compiler)
+  npm: name=less global=yes
+  sudo: true
+  tags: install
+
+- name: Create the virtualenv
+  command: virtualenv --distribute {{ base_path }}/pari_env
+  tags: install
+
+- name: Clone the source from github
+  git: clone=yes accept_hostkey=yes repo={{ git_repo }} dest={{ base_path }}/pari
+  tags: install
+
+- name: Pull the latest code
+  git: repo={{ git_repo }} update=yes dest={{ base_path }}/pari
+  tags: deploy
+
+- name: Install dependencies from requirements.txt
+  pip: requirements={{ requirements_file }} virtualenv={{ base_path }}/pari_env
+  tags:
+    - install
+    - deploy
+
+- name: manage.py syncdb
+  django_manage: >
+    command=syncdb
+    virtualenv={{ base_path }}/pari_env
+    app_path={{ base_path }}/pari
+    settings={{ settings_path }}
+  tags:
+    - install
+    - deploy
+
+- name: manage.py migrate
+  django_manage: >
+    command=migrate
+    virtualenv={{ base_path }}/pari_env
+    app_path={{ base_path }}/pari
+    settings={{ settings_path }}
+  tags:
+    - install
+    - deploy
+
+# - name: Restart gunicorn through supervisorctl
+#   tags:
+#     - deploy

@@ -1,0 +1,16 @@
+---
+- name: Install nginx
+  apt: name=nginx state=present
+  sudo: true
+  tags: install
+
+- name: Remove the default config
+  command: rm /etc/nginx/sites-enabled/default
+  sudo: true
+  tags: install
+
+- name: Copy nginx configuration
+  template: src=pari.conf dest=/etc/nginx/sites-enabled/pari.conf
+  sudo: true
+  notify: restart nginx
+  tags: install
