@@ -7,6 +7,6 @@
     - common
     - nginx
     - postgres
-    #- elasticsearch
+    - elasticsearch
     - memcached
     - django
