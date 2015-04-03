@@ -1,5 +1,5 @@
 # pari-ansible
-Ansible playbooks to setup PARI
+Ansible playbooks to setup PARI code located at https://github.com/ruralindia/pari
 
 ## Usage
 
