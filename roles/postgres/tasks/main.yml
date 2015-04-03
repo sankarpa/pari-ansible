@@ -9,12 +9,14 @@
   sudo: true
   tags: install
 
-# - name: Create a db user
-#   postgresql_user: name={{ db_user }} password={{ db_password }}
-#   sudo: true
-#   tags: install
+- name: Create a db user
+  postgresql_user: name={{ db_user }} password={{ db_password }}
+  sudo: true
+  sudo_user: postgres
+  tags: install
 
-# - name: Create a db
-#   postgresql_db: name={{ db_name }} owner={{ db_user }}
-#   sudo: true
-#   tags: install
+- name: Create a db
+  postgresql_db: name={{ db_name }} owner={{ db_user }}
+  sudo: true
+  sudo_user: postgres
+  tags: install
