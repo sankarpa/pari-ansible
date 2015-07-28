@@ -57,7 +57,22 @@
     - install
     - deploy
 
-- name: collectstatic
+# [Temporary start] tasks for building static for wagtail static
+- name: Symlink to correct nodejs
+  command: ln -sf /usr/bin/nodejs /usr/bin/node
+  sudo: true
+  tags: install
+
+- name: Build the static files
+  shell: npm install && npm run build
+  args:
+    chdir: "{{ base_path }}/pari_env/src/wagtail"
+  tags:
+    - install
+    - deploy
+# [Temporary end]
+
+- name: Collectstatic
   django_manage: >
     command="collectstatic --noinput"
     virtualenv={{ base_path }}/pari_env
@@ -67,7 +82,7 @@
     - install
     - deploy
 
-- name: compress
+- name: Compress media
   django_manage: >
     command="compress"
     virtualenv={{ base_path }}/pari_env
