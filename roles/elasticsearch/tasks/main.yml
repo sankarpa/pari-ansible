@@ -9,5 +9,9 @@
 - name: Install elasticsearch
   apt: deb=/tmp/elasticsearch.deb
   sudo: true
-  notify: restart elasticsearch
+  tags: install
+
+- name: Restart elasticsearch
+  service: name=elasticsearch state=restarted
+  sudo: true
   tags: install

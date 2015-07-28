@@ -26,5 +26,9 @@
   template: src=pari.conf dest=/etc/nginx/sites-enabled/pari.conf
   sudo: true
   ignore_errors: true
-  notify: restart nginx
+  tags: install
+
+- name: Restart nginx
+  service: name=nginx state=restarted
+  sudo: true
   tags: install

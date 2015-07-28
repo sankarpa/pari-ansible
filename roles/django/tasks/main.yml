@@ -44,7 +44,7 @@
   tags:
     - install
 
-- name: Copy the supervisor.conf to the project
+- name: Copy the supervisor.conf
   template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
   sudo: true
   tags:
@@ -78,8 +78,25 @@
     - deploy
   ignore_errors: true
 
+- name: Update search index
+  django_manage: >
+    command="update_index"
+    virtualenv={{ base_path }}/pari_env
+    app_path={{ base_path }}/pari
+    settings={{ settings_path }}
+  tags:
+    - install
+    - deploy
+  ignore_errors: true
+
+- name: Restart supervisord
+  service: name=supervisor state=restarted
+  sudo: true
+  tags: install
+
 - name: Restart gunicorn through supervisor
-  supervisorctl: name={{ proj_name }} state=restarted config={{ base_path }}/pari/supervisord.conf
+  supervisorctl: name={{ proj_name }}:gunicorn_{{ proj_name }} state=restarted
+  sudo: true
   tags:
     - install
     - deploy
