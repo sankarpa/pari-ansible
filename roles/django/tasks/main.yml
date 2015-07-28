@@ -1,9 +1,4 @@
 ---
-- name: Install lessc (LESS Compiler)
-  npm: name=less global=yes
-  sudo: true
-  tags: install
-
 - name: Create the virtualenv
   command: virtualenv --distribute {{ base_path }}/pari_env
   tags: install
@@ -44,11 +39,14 @@
   with_items:
     - gunicorn
     - ipython
+    - hiredis
+    - redis
   tags:
     - install
 
 - name: Copy the supervisor.conf to the project
-  template: src=supervisord.conf dest={{ base_path }}/pari/supervisord.conf
+  template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
+  sudo: true
   tags:
     - install
     - deploy
@@ -78,6 +76,7 @@
   tags:
     - install
     - deploy
+  ignore_errors: true
 
 - name: Restart gunicorn through supervisor
   supervisorctl: name={{ proj_name }} state=restarted config={{ base_path }}/pari/supervisord.conf

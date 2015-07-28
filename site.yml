@@ -8,5 +8,4 @@
     - nginx
     - postgres
     - elasticsearch
-    - memcached
     - django

@@ -15,7 +15,9 @@
     - python-dev
     - python-pip
     - python-virtualenv
+    - node
     - npm
+    - node-less
     - libjpeg-dev
     - libfreetype6-dev
     - libtiff5-dev
@@ -26,5 +28,6 @@
     - libyaml-dev
     - supervisor
     - openjdk-7-jre-headless
+    - redis-server
   sudo: true
   tags: install
