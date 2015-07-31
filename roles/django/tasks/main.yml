@@ -47,15 +47,11 @@
 - name: Copy the supervisor.conf
   template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
   sudo: true
-  tags:
-    - install
-    - deploy
+  tags: install
 
 - name: Copy the gunicorn_conf.py to the project
   template: src=gunicorn_conf.py dest={{ base_path }}/pari/gunicorn_conf.py
-  tags:
-    - install
-    - deploy
+  tags: install
 
 # [Temporary start] tasks for building static for wagtail static
 - name: Symlink to correct nodejs
