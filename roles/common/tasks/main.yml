@@ -31,3 +31,8 @@
     - redis-server
   sudo: true
   tags: install
+
+- name: Install redis python library
+  pip: redis
+  sudo: true
+  tags: install
