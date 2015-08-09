@@ -68,6 +68,13 @@
     - deploy
 # [Temporary end]
 
+- name: Copy the crontab
+  template: src=crontab dest=/etc/cron.d/ubuntu
+  sudo: true
+  tags:
+    - install
+    - deploy
+
 - name: Collectstatic
   django_manage: >
     command="collectstatic --noinput"

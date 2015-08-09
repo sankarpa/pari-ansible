@@ -1,0 +1,1 @@
+*/10 * * * * {{ ansible_user_id }} /usr/bin/redis-cli flushdb
