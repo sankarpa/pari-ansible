@@ -2,6 +2,7 @@
 db_user: pari
 db_password: pari
 db_name: pari
+db_host: localhost
 base_path: /home/{{ ansible_user_id }}
 domain: "{{ play_hosts[0] }}"
 git_repo: https://github.com/PARINetwork/pari.git
