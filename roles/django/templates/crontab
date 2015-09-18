@@ -2,5 +2,5 @@ SHELL=/bin/bash
 DJANGO_SETTINGS_MODULE=pari.settings.production
 
 */10 * * * * {{ ansible_user_id }} /usr/bin/redis-cli flushdb
-*/5  * * * * {{ ansible_user_id }} source {{ base_path }}/pari_env/bin/activate && cd {{ base_path }}/pari && python manage.py publish_scheduled_pages
-5   12 * * * {{ ansible_user_id }} PGPASSWORD={{ db_password }} pg_dump -U {{ db_user }} -h {{ db_host }} {{ db_name }}| bzip2 -c  > {{ base_path }}/sql_dumps/pari_sql_`date +%Y%m%d`.sql.bz2
+*/5  * * * * {{ ansible_user_id }} {{ base_path }}/scripts/publish_scheduled_pages.sh
+5   12 * * * {{ ansible_user_id }} {{ base_path }}/scripts/db_backup.sh

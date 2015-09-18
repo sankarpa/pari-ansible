@@ -75,6 +75,25 @@
     - install
     - deploy
 
+- name: Create the scripts directory
+  shell: mkdir -p {{ base_path }}/scripts
+  tags:
+    - install
+    - deploy
+  ignore_errors: true
+
+- name: Copy the publish_scheduled_pages.sh script
+  template: src=publish_scheduled_pages.sh dest={{ base_path }}/scripts/publish_scheduled_pages.sh mode=0755
+  tags:
+    - install
+    - deploy
+
+- name: Copy the db_backup.sh script
+  template: src=db_backup.sh dest={{ base_path }}/scripts/db_backup.sh mode=0755
+  tags:
+    - install
+    - deploy
+
 - name: Collectstatic
   django_manage: >
     command="collectstatic --noinput"
