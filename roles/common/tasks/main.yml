@@ -15,9 +15,6 @@
     - python-dev
     - python-pip
     - python-virtualenv
-    - node
-    - npm
-    - node-less
     - libjpeg-dev
     - libfreetype6-dev
     - libtiff5-dev
@@ -33,6 +30,26 @@
   tags: install
 
 - name: Install redis python library
-  pip: redis
+  pip: name=redis
   sudo: true
   tags: install
+
+- name: Download node.js LTS
+  get_url: url=https://nodejs.org/dist/v4.2.4/node-v4.2.4.tar.gz dest={{ base_path }}
+
+- name: Uncompress the node.js LTS package
+  unarchive: src=node-v4.2.4.tar.gz dest={{ base_path }} copy=no
+
+- name: Configure node.js LTS
+  command: chdir={{ base_path }}/node-v4.2.4 ./configure
+
+- name: Compile node.js LTS
+  command: chdir={{ base_path }}/node-v4.2.4 make
+
+- name: Install node.js LTS
+  command: chdir={{ base_path }}/node-v4.2.4 make install
+  sudo: true
+
+- name: Install lessc
+  npm: name=less global=yes
+  sudo: true
