@@ -10,17 +10,22 @@
   ignore_errors: true
   tags: install
 
+- name: Stat the SSL Certificate
+  stat: path=../templates/server.crt
+  register: cert
+  tags: install
+
 - name: Copy the SSL Certificate
   copy: src=../templates/server.crt dest=/etc/nginx/server.crt
   sudo: true
-  ignore_errors: true
   tags: install
+  when: cert.stat.exists == true
 
 - name: Copy the SSL Key
   copy: src=../templates/server.key dest=/etc/nginx/server.key
   sudo: true
-  ignore_errors: true
   tags: install
+  when: cert.stat.exists == true
 
 - name: Copy nginx configuration
   template: src=pari.conf dest=/etc/nginx/sites-enabled/pari.conf
