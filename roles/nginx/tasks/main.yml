@@ -27,6 +27,12 @@
   tags: install
   when: cert.stat.exists == true
 
+- name: Configure for DHE parameters
+  command: openssl dhparam -out dhparam.pem 2048
+  sudo: true
+  ignore_errors: true
+  tags: install
+
 - name: Copy nginx configuration
   template: src=pari.conf dest=/etc/nginx/sites-enabled/pari.conf
   sudo: true
