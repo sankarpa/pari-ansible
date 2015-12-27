@@ -11,7 +11,7 @@
   tags: install
 
 - name: Stat the SSL Certificate
-  stat: path=../templates/server.crt
+  local_action: stat path={{ role_path }}/templates/server.crt
   register: cert
   tags: install
 
