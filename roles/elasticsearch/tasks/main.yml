@@ -3,15 +3,18 @@
   get_url: >
     url=https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.2.deb
     dest=/tmp/elasticsearch.deb
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Install elasticsearch
   apt: deb=/tmp/elasticsearch.deb
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Restart elasticsearch
   service: name=elasticsearch state=restarted
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install

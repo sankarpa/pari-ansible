@@ -46,7 +46,8 @@
 
 - name: Copy the supervisor.conf
   template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Copy the gunicorn_conf.py to the project
@@ -55,7 +56,8 @@
 
 - name: Copy the crontab
   template: src=crontab dest=/etc/cron.d/ubuntu
-  sudo: true
+  become: true
+  become_method: sudo
   tags:
     - install
     - deploy
@@ -120,12 +122,14 @@
 
 - name: Restart supervisord
   service: name=supervisor state=restarted
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Restart gunicorn through supervisor
   supervisorctl: name={{ proj_name }}:gunicorn_{{ proj_name }} state=restarted
-  sudo: true
+  become: true
+  become_method: sudo
   tags:
     - install
     - deploy

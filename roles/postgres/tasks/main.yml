@@ -6,7 +6,8 @@
     - postgresql-contrib
     - libpq-dev
     - python-psycopg2
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Install postgis
@@ -17,23 +18,27 @@
     - gdal-bin
     - postgresql-9.3-postgis-2.1
     - postgresql-9.3-postgis-scripts
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Create a db user
   postgresql_user: name={{ db_user }} password={{ db_password }}
-  sudo: true
-  sudo_user: postgres
+  become: true
+  become_method: sudo
+  become_user: postgres
   tags: install
 
 - name: Create a db
   postgresql_db: name={{ db_name }} owner={{ db_user }}
-  sudo: true
-  sudo_user: postgres
+  become: true
+  become_method: sudo
+  become_user: postgres
   tags: install
 
 - name: Create the PostGIS extension
   postgresql_ext: name=postgis db={{ db_name }}
-  sudo: true
-  sudo_user: postgres
+  become: true
+  become_method: sudo
+  become_user: postgres
   tags: install

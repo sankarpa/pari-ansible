@@ -1,12 +1,14 @@
 ---
 - name: Ensure apt is up to date
   apt: update_cache=yes
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Ensure packages are upgraded
   apt: upgrade=full
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Ensure the following packages are installed
@@ -26,12 +28,14 @@
     - supervisor
     - openjdk-7-jre-headless
     - redis-server
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Install redis python library
   pip: name=redis
-  sudo: true
+  become: true
+  become_method: sudo
   tags: install
 
 - name: Download node.js LTS
@@ -48,8 +52,10 @@
 
 - name: Install node.js LTS
   command: chdir={{ base_path }}/node-v4.4.0 make install
-  sudo: true
+  become: true
+  become_method: sudo
 
 - name: Install lessc
   npm: name=less global=yes
-  sudo: true
+  become: true
+  become_method: sudo
