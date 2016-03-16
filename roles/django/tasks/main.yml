@@ -63,7 +63,7 @@
     - deploy
 
 - name: Create the scripts directory
-  shell: mkdir -p {{ base_path }}/scripts
+  file: state=directory path={{ base_path }}/scripts
   tags:
     - install
     - deploy
