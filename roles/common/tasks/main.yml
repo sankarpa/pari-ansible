@@ -35,19 +35,19 @@
   tags: install
 
 - name: Download node.js LTS
-  get_url: url=https://nodejs.org/dist/v4.2.4/node-v4.2.4.tar.gz dest={{ base_path }}
+  get_url: url=https://nodejs.org/dist/v4.4.0/node-v4.4.0.tar.gz dest={{ base_path }}
 
 - name: Uncompress the node.js LTS package
-  unarchive: src=node-v4.2.4.tar.gz dest={{ base_path }} copy=no
+  unarchive: src=node-v4.4.0.tar.gz dest={{ base_path }} copy=no
 
 - name: Configure node.js LTS
-  command: chdir={{ base_path }}/node-v4.2.4 ./configure
+  command: chdir={{ base_path }}/node-v4.4.0 ./configure
 
 - name: Compile node.js LTS
-  command: chdir={{ base_path }}/node-v4.2.4 make
+  command: chdir={{ base_path }}/node-v4.4.0 make
 
 - name: Install node.js LTS
-  command: chdir={{ base_path }}/node-v4.2.4 make install
+  command: chdir={{ base_path }}/node-v4.4.0 make install
   sudo: true
 
 - name: Install lessc
