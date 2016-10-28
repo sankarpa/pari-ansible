@@ -1,4 +1,4 @@
 *~
 roles/django/templates/local.py
 roles/nginx/templates/server.*
-
+*.retry

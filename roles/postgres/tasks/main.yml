@@ -24,6 +24,8 @@
 
 - name: Create a db user
   postgresql_user: name={{ db_user }} password={{ db_password }}
+  vars:
+    ansible_ssh_pipelining: true
   become: true
   become_method: sudo
   become_user: postgres
@@ -31,6 +33,8 @@
 
 - name: Create a db
   postgresql_db: name={{ db_name }} owner={{ db_user }}
+  vars:
+    ansible_ssh_pipelining: true
   become: true
   become_method: sudo
   become_user: postgres
@@ -38,6 +42,8 @@
 
 - name: Create the PostGIS extension
   postgresql_ext: name=postgis db={{ db_name }}
+  vars:
+    ansible_ssh_pipelining: true
   become: true
   become_method: sudo
   become_user: postgres
