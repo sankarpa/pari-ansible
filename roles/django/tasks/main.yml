@@ -1,22 +1,16 @@
 ---
-- name: Create the virtualenv
-  command: virtualenv --distribute {{ base_path }}/pari_env
-  tags: install
-
-- name: Clone the source from github
-  git: clone=yes accept_hostkey=yes repo={{ git_repo }} dest={{ base_path }}/pari
-  tags: install
-
-- name: Pull the latest code
-  git: repo={{ git_repo }} update=yes dest={{ base_path }}/pari
-  tags: deploy
-
-- name: Copy the local.py file
-  template: src=local.py dest={{ base_path }}/pari/pari/settings/local.py
-  ignore_errors: true
+- name: Install global dependencies into the virtualenv
+  pip: virtualenv={{ base_path }}/pari_env name={{ item }} state=forcereinstall
+  with_items:
+    - pip
+    - six
+    - setuptools
+    - gunicorn
+    - ipython
+    - hiredis
+    - redis
   tags:
     - install
-    - deploy
 
 - name: Install dependencies from requirements.txt
   pip: requirements={{ requirements_file }} virtualenv={{ base_path }}/pari_env
@@ -33,16 +27,6 @@
   tags:
     - install
     - deploy
-
-- name: Install global dependencies into the virtualenv
-  pip: virtualenv={{ base_path }}/pari_env name={{ item }}
-  with_items:
-    - gunicorn
-    - ipython
-    - hiredis
-    - redis
-  tags:
-    - install
 
 - name: Copy the supervisor.conf
   template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
