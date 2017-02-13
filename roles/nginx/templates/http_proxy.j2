@@ -29,28 +29,28 @@
         root            {{ base_path }}/pari;
         access_log      off;
         log_not_found   off;
-	gzip_static on;
-	expires 28d;
+        gzip_static on;
+        expires 28d;
     }
 
     location /media {
         root            {{ base_path }}/pari;
         access_log      off;
         log_not_found   off;
-	gzip_static on;
-	expires 28d;
+        gzip_static on;
+        expires 28d;
     }
 
     location /robots.txt {
         root            {{ base_path }}/pari/static;
         access_log      off;
         log_not_found   off;
-	expires 28d;
+        expires 28d;
     }
 
     location /favicon.ico {
         root            {{ base_path }}/pari/static;
         access_log      off;
         log_not_found   off;
-	expires 28d;
+        expires 28d;
     }
