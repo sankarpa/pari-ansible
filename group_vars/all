@@ -4,9 +4,11 @@ db_password: pari
 db_name: pari
 db_host: localhost
 base_path: /home/{{ ansible_user_id }}
+app_path: "{{ base_path }}/pari"
 domain: "{{ play_hosts[0] }}"
 git_repo: https://github.com/PARINetwork/pari.git
-requirements_file: "{{ base_path }}/pari/requirements.txt"
+git_revision_to_pull: HEAD
+requirements_file: "{{ app_path }}/requirements.txt"
 settings_path: "pari.settings.production"
 proj_name: pari
 port: 8000

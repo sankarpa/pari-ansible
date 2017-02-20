@@ -2,7 +2,9 @@
 - name: Install and deploy PARI
   hosts:
     - production
+    - qa
     - local
+    - vagrant
   roles:
     - common
     - nginx

@@ -12,20 +12,20 @@
   tags:
     - install
 
-- name: Create the virtualenv
-  command: virtualenv --distribute {{ base_path }}/pari_env
-  tags: install
+#- name: Create the virtualenv
+#  command: virtualenv --distribute {{ base_path }}/pari_env
+#  tags: install
 
 - name: Clone the source from github
-  git: clone=yes accept_hostkey=yes repo={{ git_repo }} dest={{ base_path }}/pari
+  git: clone=yes accept_hostkey=yes repo={{ git_repo }} dest={{ app_path }}
   tags: install
 
 - name: Pull the latest code
-  git: repo={{ git_repo }} update=yes dest={{ base_path }}/pari
+  git: repo={{ git_repo }} update=yes dest={{ app_path }} version={{ git_revision_to_pull }}
   tags: deploy
 
 - name: Copy the local.py file
-  template: src=local.py dest={{ base_path }}/pari/pari/settings/local.py
+  template: src=local.py dest={{ app_path }}/pari/settings/local.py
   tags: deploy
   ignore_errors: true
 
@@ -39,7 +39,7 @@
   django_manage: >
     command=migrate
     virtualenv={{ base_path }}/pari_env
-    app_path={{ base_path }}/pari
+    app_path={{ app_path }}
     settings={{ settings_path }}
   tags:
     - install
@@ -52,7 +52,7 @@
   tags: install
 
 - name: Copy the gunicorn_conf.py to the project
-  template: src=gunicorn_conf.py dest={{ base_path }}/pari/gunicorn_conf.py
+  template: src=gunicorn_conf.py dest={{ app_path }}/gunicorn_conf.py
   tags: install
 
 - name: Copy the crontab
@@ -86,7 +86,7 @@
   django_manage: >
     command="collectstatic --noinput"
     virtualenv={{ base_path }}/pari_env
-    app_path={{ base_path }}/pari
+    app_path={{ app_path }}
     settings={{ settings_path }}
   tags:
     - install
@@ -96,7 +96,7 @@
   django_manage: >
     command="compress"
     virtualenv={{ base_path }}/pari_env
-    app_path={{ base_path }}/pari
+    app_path={{ app_path }}
     settings={{ settings_path }}
   tags:
     - install
@@ -107,7 +107,7 @@
   django_manage: >
     command="update_index"
     virtualenv={{ base_path }}/pari_env
-    app_path={{ base_path }}/pari
+    app_path={{ app_path }}
     settings={{ settings_path }}
   tags:
     - install

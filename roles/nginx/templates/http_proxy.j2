@@ -26,7 +26,7 @@
     }
 
     location /static {
-        root            {{ base_path }}/pari;
+        root            {{ app_path }};
         access_log      off;
         log_not_found   off;
         gzip_static on;
@@ -34,7 +34,7 @@
     }
 
     location /media {
-        root            {{ base_path }}/pari;
+        root            {{ app_path }};
         access_log      off;
         log_not_found   off;
         gzip_static on;
@@ -42,14 +42,14 @@
     }
 
     location /robots.txt {
-        root            {{ base_path }}/pari/static;
+        root            {{ app_path }}/static;
         access_log      off;
         log_not_found   off;
         expires 28d;
     }
 
     location /favicon.ico {
-        root            {{ base_path }}/pari/static;
+        root            {{ app_path }}/static;
         access_log      off;
         log_not_found   off;
         expires 28d;
