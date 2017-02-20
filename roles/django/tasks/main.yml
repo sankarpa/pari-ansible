@@ -12,6 +12,23 @@
   tags:
     - install
 
+- name: Create the virtualenv
+  command: virtualenv --distribute {{ base_path }}/pari_env
+  tags: install
+
+- name: Clone the source from github
+  git: clone=yes accept_hostkey=yes repo={{ git_repo }} dest={{ base_path }}/pari
+  tags: install
+
+- name: Pull the latest code
+  git: repo={{ git_repo }} update=yes dest={{ base_path }}/pari
+  tags: deploy
+
+- name: Copy the local.py file
+  template: src=local.py dest={{ base_path }}/pari/pari/settings/local.py
+  tags: deploy
+  ignore_errors: true
+
 - name: Install dependencies from requirements.txt
   pip: requirements={{ requirements_file }} virtualenv={{ base_path }}/pari_env
   tags:
