@@ -50,7 +50,7 @@
   tags: install
 
 - name: Import sample dump for db
-  shell: PGPASSWORD={{ db_password }} psql -U {{ db_user }} -h {{ domain }} < {{ base_path }}/dump.sql
+  shell: PGPASSWORD={{ db_password }} psql -U {{ db_user }} -h localhost < {{ base_path }}/dump.sql
   become_user: postgres
   when: ansible_ssh_user == "vagrant"
   tags: install
