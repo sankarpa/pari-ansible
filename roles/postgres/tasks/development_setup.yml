@@ -1,0 +1,21 @@
+- name: Import sample dump for db
+  shell: PGPASSWORD={{ db_password }} psql -U {{ db_user }} -h localhost < {{ base_path }}/dump.sql
+  become: true
+  become_method: sudo
+  become_user: postgres
+
+- name: Create test db
+  postgresql_db: name=test_{{ db_name }} owner={{ db_user }}
+  vars:
+    ansible_ssh_pipelining: true
+  become: true
+  become_method: sudo
+  become_user: postgres
+
+- name: Create the PostGIS extension for test DB
+  postgresql_ext: name=postgis db=test_{{ db_name }}
+  vars:
+    ansible_ssh_pipelining: true
+  become: true
+  become_method: sudo
+  become_user: postgres
