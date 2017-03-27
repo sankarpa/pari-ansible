@@ -1,0 +1,23 @@
+- name: Stop supervisor
+  command: service supervisor stop
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Wait for gunicorn to stop
+  wait_for: port={{ port }} state=stopped timeout=20
+
+- name: Replace supervisor.conf to manage django development server instead of gunicorn
+  template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Start supervisor
+  command: service supervisor start
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Wait for development server to start
+  wait_for: port={{ port }} state=present timeout=20

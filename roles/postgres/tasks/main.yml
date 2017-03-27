@@ -48,8 +48,3 @@
   become_method: sudo
   become_user: postgres
   tags: install
-
-- name: Development setup
-  include: development_setup.yml
-  when: is_local_development
-  tags: install

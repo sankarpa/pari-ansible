@@ -11,3 +11,4 @@
     - postgres
     - elasticsearch
     - django
+    - { role: development, when: is_local_development }
