@@ -4,6 +4,7 @@
     - production
     - qa
     - local
+    - staging
     - vagrant
   roles:
     - common
