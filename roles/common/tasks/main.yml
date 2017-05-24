@@ -99,3 +99,17 @@
   become: true
   become_method: sudo
   tags: install
+
+- name: Disallow root SSH access
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Disallow password authentication
+  action: lineinfile dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+  become: true
+  become_method: sudo
+  tags: install
+  notify:
+    - Restart ssh
