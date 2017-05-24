@@ -59,3 +59,43 @@
   npm: name=less global=yes
   become: true
   become_method: sudo
+
+- name: Configure ufw rules
+  ufw: rule={{ item.rule }} port={{ item.port }} proto={{ item.proto }}
+  with_items:
+    - { rule: 'allow', port: '22', proto: 'tcp' }
+    - { rule: 'allow', port: '80', proto: 'tcp' }
+    - { rule: 'allow', port: '443', proto: 'tcp' }
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Allow OpenSSH
+  ufw: rule=allow name=OpenSSH
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Deny incoming
+  ufw: policy=deny direction=incoming
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Allow outgoing
+  ufw: policy=allow direction=outgoing
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Enable ufw logging
+  ufw: logging=on
+  become: true
+  become_method: sudo
+  tags: install
+
+- name: Enable ufw
+  ufw: state=enabled
+  become: true
+  become_method: sudo
+  tags: install
