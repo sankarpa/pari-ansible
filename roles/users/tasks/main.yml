@@ -1,0 +1,14 @@
+---
+- name: Make sure user exists
+  user: name={{ item.name }} state=present
+  become: yes
+  with_items: '{{ users }}'
+  tags: install
+
+- name: Add SSH authorized keys
+  authorized_key: user={{ item.0.name }} key="{{ item.1 }}"
+  become: yes
+  with_subelements:
+    - '{{ users }}'
+    - keys
+  tags: install

@@ -1,0 +1,5 @@
+---
+users:
+  - name: "ubuntu"
+    keys:
+      - "{{ lookup('file', 'keys/jayakumar.pub') }}"

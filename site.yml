@@ -7,6 +7,7 @@
     - vagrant
   roles:
     - common
+    - users
     - nginx
     - postgres
     - elasticsearch
