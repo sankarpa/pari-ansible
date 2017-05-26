@@ -13,4 +13,6 @@ settings_path: "pari.settings.production"
 proj_name: pari
 port: 8000
 enable_secure_access: false
+allow_robots: False
+
 is_local_development: "{{ ansible_ssh_user == 'vagrant' }}"
