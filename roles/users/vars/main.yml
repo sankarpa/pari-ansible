@@ -3,3 +3,4 @@ users:
   - name: "ubuntu"
     keys:
       - "{{ lookup('file', 'keys/jayakumar.pub') }}"
+      - "{{ lookup('file', 'keys/siddharth.pub') }}"
