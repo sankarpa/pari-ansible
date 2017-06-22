@@ -1,0 +1,5 @@
+- name: recursively copy files from backup server to target
+  action: command  rsync -avz vagrant@192.168.33.10:/home/vagrant/backup /vagrant
+#Todo archive the backup if the machine doesn't have any pari data else just do rsync
+#todo ask if we need to run provision
+#todo just recreate db
