@@ -1,15 +1,16 @@
 ---
 - name: Install and deploy PARI
   hosts:
-    - production
-    - qa
-    - local
-    - staging
-    - vagrant
+#    - production
+#    - qa
+#    - local
+#    - vagrant
+    - prod-recovery
   roles:
-    - common
-    - nginx
-    - postgres
-    - elasticsearch
-    - django
-    - { role: development, when: is_local_development }
+#    - common
+#    - nginx
+#    - postgres
+#    - elasticsearch
+#    - django
+#    - { role: development, when: is_local_development }
+    - recovery
