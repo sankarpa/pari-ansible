@@ -1,9 +1,11 @@
 - name: Import sample dump for db
-  shell: PGPASSWORD={{ db_password }} psql -U {{ db_user }} -h localhost < {{ base_path }}/dump.sql
-  become: true
-  become_method: sudo
-  become_user: postgres
-  tags: install
+  django_manage: >
+    command=seed_data
+    virtualenv={{ base_path }}/pari_env
+    app_path={{ app_path }}
+    settings={{ settings_path }}
+  tags:
+    - install
 
 - name: Create test db
   postgresql_db: name=test_{{ db_name }} owner={{ db_user }}

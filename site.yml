@@ -2,11 +2,12 @@
 - name: Install and deploy PARI
   hosts:
     - production
-    - qa
+    - staging
     - local
     - vagrant
   roles:
     - common
+    - users
     - nginx
     - postgres
     - elasticsearch

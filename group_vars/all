@@ -12,8 +12,10 @@ requirements_file: "{{ app_path }}/requirements.txt"
 settings_path: "pari.settings.production"
 proj_name: pari
 port: 8000
+
 backup_server_username: paribackup
 backup_server_ip: 88.99.83.0
 
-
+enable_secure_access: false
+allow_robots: False
 is_local_development: "{{ ansible_ssh_user == 'vagrant' }}"

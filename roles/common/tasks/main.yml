@@ -98,6 +98,7 @@
 
 - name: Enable ufw logging
   ufw: logging=on
+  ufw: logging=low
   become: true
   become_method: sudo
   tags: install
@@ -113,11 +114,13 @@
   become: true
   become_method: sudo
   tags: install
+  when: enable_secure_access
 
 - name: Disallow password authentication
   action: lineinfile dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
   become: true
   become_method: sudo
   tags: install
+  when: enable_secure_access
   notify:
     - Restart ssh

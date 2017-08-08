@@ -42,7 +42,11 @@
     }
 
     location /robots.txt {
-        root            {{ app_path }}/static;
+        {% if allow_robots -%}
+            root            {{ app_path }}/static;
+        {% else -%}
+            alias           {{ app_path }}/static/robots-deny.txt;
+        {% endif -%}
         access_log      off;
         log_not_found   off;
         expires 28d;
