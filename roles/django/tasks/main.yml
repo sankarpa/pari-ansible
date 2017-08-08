@@ -1,7 +1,9 @@
 ---
 - name: Create the virtualenv
   command: virtualenv --distribute {{ base_path }}/pari_env  creates={{ base_path }}/pari_env/bin/python
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Install global dependencies into the virtualenv
   pip: virtualenv={{ base_path }}/pari_env name={{ item }} state=forcereinstall
@@ -15,6 +17,7 @@
     - redis
   tags:
     - install
+    - restore
 
 
 - name: Clone the source from github
@@ -27,7 +30,9 @@
 
 - name: Copy the local.py file
   template: src=local.py dest={{ app_path }}/pari/settings/local.py
-  tags: deploy
+  tags:
+     - deploy
+     - restore
   ignore_errors: true
 
 - name: Install dependencies from requirements.txt
@@ -35,6 +40,8 @@
   tags:
     - install
     - deploy
+    - restore
+
 
 - name: manage.py migrate
   django_manage: >
@@ -50,11 +57,15 @@
   template: src=supervisord.conf dest=/etc/supervisor/conf.d/pari.conf
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Copy the gunicorn_conf.py to the project
   template: src=gunicorn_conf.py dest={{ app_path }}/gunicorn_conf.py
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Copy the crontab
   template: src=crontab dest=/etc/cron.d/ubuntu
@@ -63,12 +74,14 @@
   tags:
     - install
     - deploy
+    - restore
 
 - name: Create the scripts directory
   file: state=directory path={{ base_path }}/scripts
   tags:
     - install
     - deploy
+    - restore
   ignore_errors: true
 
 - name: Copy the publish_scheduled_pages.sh script
@@ -76,12 +89,14 @@
   tags:
     - install
     - deploy
+    - restore
 
 - name: Copy the db_backup.sh script
   template: src=db_backup.sh dest={{ base_path }}/scripts/db_backup.sh mode=0755
   tags:
     - install
     - deploy
+    - restore
 
 - name: Collectstatic
   django_manage: >
@@ -92,6 +107,7 @@
   tags:
     - install
     - deploy
+    - restore
 
 - name: Compress media
   django_manage: >
@@ -102,6 +118,7 @@
   tags:
     - install
     - deploy
+    - restore
   ignore_errors: true
 
 - name: Update search index
@@ -113,6 +130,7 @@
   tags:
     - install
     - deploy
+    - restore
   ignore_errors: true
 
 - name: Clear cache
@@ -120,13 +138,16 @@
   tags:
     - install
     - deploy
+    - restore
   ignore_errors: true
 
 - name: Restart supervisord
   command: service supervisor restart
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Restart gunicorn through supervisor
   supervisorctl: name={{ proj_name }}:gunicorn_{{ proj_name }} state=restarted
@@ -135,3 +156,4 @@
   tags:
     - install
     - deploy
+    - restore

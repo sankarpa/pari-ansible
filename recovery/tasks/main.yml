@@ -1,5 +1,21 @@
 - name: recursively copy files from backup server to target
-  action: command  rsync -avz vagrant@192.168.33.10:/home/vagrant/backup /vagrant
-#Todo archive the backup if the machine doesn't have any pari data else just do rsync
-#todo ask if we need to run provision
-#todo just recreate db
+  action: command  rsync -avz --exclude 'pari_env' {{backup_server_username}}@{{backup_server_ip}}:{{backup_server_username}}/backup/localhost/home/ubuntu/ {{base_path}}/
+  tags: restore
+
+- name: Get latest dump file
+  shell : cd  {{base_path}}/sql_dumps && ls -t | head -n1
+  register: latest_file
+  tags: restore
+
+- name : Unarchive the latest dump
+  shell :  bzip2  -kcd -f {{base_path}}/sql_dumps/{{latest_file}} > {{base_path}}/latest_dump.sql
+  tags: restore
+  become_method: sudo
+  become: true
+
+- name: Restore db Ddump
+  shell: dropdb --if-exists pari && createdb pari --owner pari &&  psql -d pari -c "CREATE EXTENSION postgis;" && PGPASSWORD={{ db_password }} psql -U {{ db_user }} -h localhost < {{ base_path }}/latest_dump.sql
+  become: true
+  become_method: sudo
+  become_user: postgres
+  tags: restore

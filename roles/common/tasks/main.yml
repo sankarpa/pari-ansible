@@ -3,13 +3,17 @@
   apt: update_cache=yes
   become: true
   become_method: sudo
-  tags: install
+  tags:
+  - install
+  - restore
 
 - name: Ensure packages are upgraded
   apt: upgrade=full
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Ensure the following packages are installed
   apt: name={{ item }}
@@ -30,13 +34,17 @@
     - redis-server
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Install redis python library
   pip: name=redis
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Download node.js LTS
   get_url: url=https://nodejs.org/dist/v4.5.0/node-v4.5.0.tar.gz dest={{ base_path }}

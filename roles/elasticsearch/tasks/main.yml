@@ -5,16 +5,22 @@
     dest=/tmp/elasticsearch.deb
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Install elasticsearch
   apt: deb=/tmp/elasticsearch.deb
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
 
 - name: Restart elasticsearch
   service: name=elasticsearch state=restarted
   become: true
   become_method: sudo
-  tags: install
+  tags:
+    - install
+    - restore
